@@ -1,0 +1,20 @@
+﻿@page "/login"
+@inject AuthService AuthService
+
+<EditForm Model="loginModel" OnValidSubmit="HandleLogin">
+  <InputText @bind-Value="loginModel.Username" Placeholder="Username" />
+  <InputText @bind-Value="loginModel.Password" Placeholder="Password" Type="password" />
+  <button type="submit">Login</button>
+</EditForm>
+
+@code {
+  private LoginModel loginModel = new();
+  private async Task HandleLogin()
+  {
+    var token = await AuthService.Login(loginModel.Username, loginModel.Password);
+    if (token != null)
+    {
+      // Salvar token no localStorage e redirecionar
+    }
+  }
+}
