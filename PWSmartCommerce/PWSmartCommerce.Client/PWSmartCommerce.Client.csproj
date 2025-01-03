@@ -12,4 +12,10 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="PWSmartCommerce.Domain">
+      <HintPath>..\..\..\PWSmartCommerce-BackEnd\PWSmartCommerce.Domain\bin\Debug\net9.0\PWSmartCommerce.Domain.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

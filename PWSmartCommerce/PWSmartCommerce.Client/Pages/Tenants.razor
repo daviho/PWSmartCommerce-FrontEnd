@@ -1,29 +1,58 @@
 ﻿@page "/tenants"
+@using PWSmartCommerce.Client.Services
+@using PWSmartCommerce.Domain.Models
 @inject TenantService TenantService
 
-<table>
-  <thead>
-  <tr>
-    <th>ID</th>
-    <th>Name</th>
-  </tr>
-  </thead>
-  <tbody>
-  @foreach (var tenant in tenants)
-  {
+<h3>Gerenciamento de Tenants</h3>
+
+<button @onclick="LoadTenants">Carregar Tenants</button>
+
+@if (tenants == null)
+{
+  <p>Carregando...</p>
+}
+else
+{
+  <table>
+    <thead>
     <tr>
-      <td>@tenant.TenantID</td>
-      <td>@tenant.Name</td>
+      <th>ID</th>
+      <th>Nome</th>
+      <th>Ações</th>
     </tr>
-  }
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+    @foreach (var tenant in tenants)
+    {
+      <tr>
+        <td>@tenant.TenantId</td>
+        <td>@tenant.Name</td>
+        <td>
+          <button @onclick="() => EditTenant(tenant)">Editar</button>
+          <button @onclick="() => DeleteTenant(tenant.TenantId)">Deletar</button>
+        </td>
+      </tr>
+    }
+    </tbody>
+  </table>
+}
 
 @code {
-  private List<Tenant> tenants = new();
+  private List<Tenant>? tenants;
 
-  protected override async Task OnInitializedAsync()
+  private async Task LoadTenants()
   {
     tenants = await TenantService.GetTenantsAsync();
+  }
+
+  private void EditTenant(Tenant tenant)
+  {
+    // Lógica de edição
+  }
+
+  private async Task DeleteTenant(int id)
+  {
+    await TenantService.DeleteTenantAsync(id);
+    await LoadTenants();
   }
 }
